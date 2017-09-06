@@ -64,7 +64,9 @@ var CommentView = Backbone.View.extend({
      * templating to protect against this, such as
      * <%- escaped interpolation %> in underscore's _.template.
      *
-     * For now, we won't worry about that. */
+     * For now, we won't worry about that.
+     * loool
+     */
   }
 });
 /* Now that we have a model, let's imagine what would happen were we to have
@@ -110,9 +112,16 @@ var CommentsView = Backbone.View.extend({
     /* Render each model in the collection as a list item (<li>).
      * Remember, we have the underscore functions: */
     this.$el.find('ul').append(this.collection.map(function(comment) {
-      // YOUR CODE HERE
+      var htmlBit = [
+        '<li class="comment">',
+        comment.attributes.message,
+        ' - ',
+        comment.attributes.votes,
+        '</li>'
+      ].join('');
+      return htmlBit;
     }));
-
+    console.log(this.$el);
     return this.$el;
   }
 });
@@ -134,7 +143,13 @@ var comments = new Comments(commentList);
 var commentsView = new CommentsView({ collection: comments });
 
 // Append it to the page (uncomment this when you are ready):
-// $('body').append(commentsView.render());
+$('body').append(commentsView.render());
+
+
+setInterval(() => {
+  commentList[1].votes(commentList[1].votes() - 1);
+}, 1000);
+
     </script>
   </body>
 </html>
